@@ -1,12 +1,12 @@
-﻿using System;
-
-namespace EPAM_Task_3
+﻿
+namespace Task3
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
+
         }
     }
 }
