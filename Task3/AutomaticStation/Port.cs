@@ -1,35 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Task3.AutomaticStation.Interfaces;
 using Task3.AutomaticStation.Models;
 using Task3.AutomaticStation.Models.Call;
-using Task3.AutomaticStation.Models.Message;
 
 namespace Task3.AutomaticStation
 {
     class Port : IPort
     {
-        public PortStatus Status { get; private set; }
+        public PortStatus Status { get; set; }
 
         public string PhoneNumber { get; set; }
-
-        public event EventHandler<MessageEventArgs> MessageReceived;
         public event EventHandler<CallEventArgs> IncomingCall;
+        public event EventHandler<CallEventArgs> OutcomingCall;
+        public event EventHandler<CallEventArgs> PortBusy;
+        public event EventHandler<CallEventArgs> CallTerminate;
 
-        public ConnectionError Connect(Terminal terminal)
+        private ITerminal _terminal;
+
+        public Port(string phoneNumber, ITerminal terminal)
+        {
+            Status = PortStatus.FREE;
+            PhoneNumber = phoneNumber;
+            _terminal = terminal;
+            _terminal.Connected += OnTerminalStatusRequest;
+        }
+
+        private ConnectionError Connect()
         {
             if (Status != PortStatus.CONNECTED)
             {
-                MessageReceived += terminal.OnMessageReceived;
-                IncomingCall += terminal.OnIncomingCall;
+                IncomingCall += _terminal.OnIncomingCall;
 
                 // subscribe port to terminal messages
-                terminal.MessageSendingRequested += OnMessageSendingRequested;
-                terminal.Called += OnCalled;
-
+                _terminal.Called += OnOutcomingCall;
+                _terminal.CallTerminate += OnCallTerminate;
                 Status = PortStatus.CONNECTED;
 
                 return ConnectionError.OK;
@@ -40,28 +44,52 @@ namespace Task3.AutomaticStation
             }
         }
 
-        public void Disconnect(Terminal terminal)
+        private void Disconnect()
         {
             if (Status != PortStatus.FREE)
             {
-                MessageReceived -= terminal.OnMessageReceived;
-                IncomingCall -= terminal.OnIncomingCall;
+                IncomingCall -= _terminal.OnIncomingCall;
 
-                terminal.MessageSendingRequested -= OnMessageSendingRequested;
-                terminal.Called -= OnCalled;
+                _terminal.Called -= OnOutcomingCall;
 
                 Status = PortStatus.FREE;
             }
         }
 
-        public void OnCalled(object sender, CallEventArgs e)
+        public void OnIncomingCall(CallEventArgs e)
         {
-            
+            Status = PortStatus.BUSY;
+            IncomingCall?.Invoke(this, e);
         }
 
-        public void OnMessageSendingRequested(object sender, MessageSendingEventArgs e)
+        public void OnOutcomingCall(object sender, CallEventArgs e)
         {
-           
+            Status = PortStatus.BUSY;
+            e.CallerPhoneNumber = PhoneNumber;
+            OutcomingCall?.Invoke(sender, e);
+        }
+
+        public void CallingErrorMessage(CallEventArgs e)
+        {
+            _terminal.CallingError(e);
+        }
+
+        public void OnCallTerminate(object sender, CallEventArgs e)
+        {
+            Status = PortStatus.CONNECTED;
+            CallTerminate?.Invoke(sender, e);
+        }
+
+        public void OnTerminalStatusRequest(object sender, ConnectEventArgs e)
+        {
+            if (e.Status == PortStatus.CONNECTED)
+            {
+                Connect();
+            }
+            else
+            {
+                Disconnect();
+            }
         }
     }
 }

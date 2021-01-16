@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3.AutomaticStation.Models.Message
+namespace Task3.BillingSystem.Models
 {
-    public enum MessageSendErrorCode
+    public enum FilterParameters
     {
-        OK,
-        WRONG_PHONE_NUMBER
+        CALL_DATE,
+        COST,
+        ABONENT
     }
 }

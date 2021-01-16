@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3.AutomaticStation.Models.Message
+namespace Task3.Logger.Interfaces
 {
-    public enum MessageType
+    public interface ILogger
     {
-        SMS,
-        MMS
+        void Log(string message);
     }
 }

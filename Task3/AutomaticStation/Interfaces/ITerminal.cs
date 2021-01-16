@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Task3.AutomaticStation.Models;
 using Task3.AutomaticStation.Models.Call;
-using Task3.AutomaticStation.Models.Message;
 
 namespace Task3.AutomaticStation.Interfaces
 {
-    interface ITerminal
+    public interface ITerminal
     {
-        event EventHandler<MessageSendingEventArgs> MessageSendingRequested;
         event EventHandler<CallEventArgs> Called;
+        event EventHandler<ConnectEventArgs> Connected;
+        event EventHandler<CallEventArgs> CallTerminate;
 
-        string PhoneNumber { get; }
-
-        MessageSendErrorCode SendMessage(Message message, MessageType type);
-        CallResponseCode Call(string PhoneNumber);
-        void OnMessageReceived(object sender, MessageEventArgs messageEventArgs);
+        CallErrorCode Call(string PhoneNumber);
         void OnIncomingCall(object sender, CallEventArgs e);
+        void Connect();
+        void Disconnect();
+        void CallingError(CallEventArgs e);
     }
 }

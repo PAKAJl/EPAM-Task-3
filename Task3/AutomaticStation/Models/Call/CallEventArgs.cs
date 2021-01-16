@@ -8,18 +8,23 @@ namespace Task3.AutomaticStation.Models.Call
 {
     public class CallEventArgs:EventArgs
     {
-        public string CallerPhoneNumber { get; }
+        public string CallerPhoneNumber { get; set; }
 
-        public string TargetPhonNumber { get; }
+        public string TargetPhoneNumber { get; }
 
         public CallResponseCode ResponseCode { get; set; }
 
         public CallErrorCode ErrorCode { get; set; }
 
-        public CallEventArgs(string callerPhoneNumber, string targetPhoneNumber)
+        public DateTime DateTimeBeginCall { get; set; }
+
+        public DateTime DataTimeEndCall { get; set; }
+
+        public CallEventArgs(string targetPhoneNumber)
         {
-            CallerPhoneNumber = callerPhoneNumber;
-            TargetPhonNumber = targetPhoneNumber;
+            TargetPhoneNumber = targetPhoneNumber;
+            ErrorCode = CallErrorCode.UNKNOWN;
+            ResponseCode = CallResponseCode.UNKNOWN;
         }
     }
 }

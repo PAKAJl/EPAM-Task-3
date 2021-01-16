@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3.AutomaticStation.Models.Call
+namespace Task3.BillingSystem.Interfaces
 {
-    public enum CallResponseCode
+    public interface ITariff
     {
-        ACCEPT,
-        REJECT,
-        UNKNOWN
+        double CostPerMinute { get; }
     }
 }

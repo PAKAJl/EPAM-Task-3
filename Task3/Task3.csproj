@@ -41,32 +41,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutomaticStation\Interfaces\IStation.cs" />
     <Compile Include="AutomaticStation\Interfaces\ITerminal.cs" />
+    <Compile Include="AutomaticStation\Models\BalanceEventArgs.cs" />
+    <Compile Include="AutomaticStation\Models\Call\CallErrorCode.cs" />
     <Compile Include="AutomaticStation\Models\Call\CallEventArgs.cs" />
     <Compile Include="AutomaticStation\Models\Call\CallResponseCode.cs" />
+    <Compile Include="AutomaticStation\Models\Call\ConnectEventArgs.cs" />
     <Compile Include="AutomaticStation\Models\ConnectionError.cs" />
     <Compile Include="AutomaticStation\Interfaces\IPort.cs" />
-    <Compile Include="AutomaticStation\Interfaces\IStation.cs" />
     <Compile Include="AutomaticStation\Port.cs" />
     <Compile Include="AutomaticStation\Station.cs" />
     <Compile Include="AutomaticStation\Terminal.cs" />
-    <Compile Include="AutomaticStation\Models\Message\Message.cs" />
-    <Compile Include="AutomaticStation\Models\Message\MessageEventArgs.cs" />
-    <Compile Include="AutomaticStation\Models\Message\MessageSendErrorCode.cs" />
-    <Compile Include="AutomaticStation\Models\Message\MessageSendingEventArgs.cs" />
-    <Compile Include="AutomaticStation\Models\Message\MessageType.cs" />
-    <Compile Include="AutomaticStation\Models\Message\MmsMessage.cs" />
-    <Compile Include="AutomaticStation\Models\Message\SmsMessage.cs" />
     <Compile Include="AutomaticStation\Models\PortStatus.cs" />
+    <Compile Include="BillingSystem\Abonent.cs" />
+    <Compile Include="BillingSystem\AbonentExtention.cs" />
+    <Compile Include="BillingSystem\CallExtention.cs" />
+    <Compile Include="BillingSystem\Interfaces\IAbonent.cs" />
+    <Compile Include="BillingSystem\Interfaces\ITariff.cs" />
+    <Compile Include="BillingSystem\Interfaces\IOperator.cs" />
+    <Compile Include="BillingSystem\Models\AbonentEventArgs.cs" />
+    <Compile Include="BillingSystem\Models\Call.cs" />
+    <Compile Include="BillingSystem\Models\FliterParameters.cs" />
+    <Compile Include="BillingSystem\Models\Tariff.cs" />
+    <Compile Include="BillingSystem\Operator.cs" />
+    <Compile Include="Logger\Interfaces\ConsoleLogger.cs" />
+    <Compile Include="Logger\Interfaces\ILogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BillingSystem\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

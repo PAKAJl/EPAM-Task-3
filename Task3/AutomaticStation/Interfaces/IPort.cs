@@ -5,22 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Task3.AutomaticStation.Models;
 using Task3.AutomaticStation.Models.Call;
-using Task3.AutomaticStation.Models.Message;
 
 namespace Task3.AutomaticStation.Interfaces
 {
     public interface IPort
     {
-        PortStatus Status { get; }
         string PhoneNumber { get; set; }
+        PortStatus Status { get; set; }
 
-        event EventHandler<MessageEventArgs> MessageReceived;
         event EventHandler<CallEventArgs> IncomingCall;
+        event EventHandler<CallEventArgs> OutcomingCall;
+        event EventHandler<CallEventArgs> CallTerminate;
 
-        ConnectionError Connect(Terminal terminal);
-        void Disconnect(Terminal terminal);
+        void OnIncomingCall(CallEventArgs e);
+        void OnOutcomingCall(object sender, CallEventArgs e);
+        void CallingErrorMessage(CallEventArgs e);
+        void OnCallTerminate(object sender, CallEventArgs e);
 
-        void OnMessageSendingRequested(object sender, MessageSendingEventArgs e);
-        void OnCalled(object sender, CallEventArgs e);
+
     }
 }
