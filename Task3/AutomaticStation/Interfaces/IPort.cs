@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Task3.AutomaticStation.Models;
 using Task3.AutomaticStation.Models.Call;
 
@@ -18,10 +14,6 @@ namespace Task3.AutomaticStation.Interfaces
         event EventHandler<CallEventArgs> CallTerminate;
 
         void OnIncomingCall(CallEventArgs e);
-        void OnOutcomingCall(object sender, CallEventArgs e);
         void CallingErrorMessage(CallEventArgs e);
-        void OnCallTerminate(object sender, CallEventArgs e);
-
-
     }
 }

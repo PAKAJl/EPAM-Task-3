@@ -47,12 +47,12 @@ namespace Task3.BillingSystem
 
         }
 
-        public void OnBalanceRequest(object sender, BalanceEventArgs e)
+        private void OnBalanceRequest(object sender, BalanceEventArgs e)
         {
             e.Balance = _abonentList.FirstOrDefault(a => a.PhoneNumber == e.PhoneNumber).Balance;
         }
 
-        public void OnCallRecordSend(object sender, CallEventArgs e)
+        private void OnCallRecordSend(object sender, CallEventArgs e)
         {
             IAbonent abonent = _abonentList.FirstOrDefault(a => a.PhoneNumber == e.CallerPhoneNumber);
             Call call = new Call(e, abonent.Tariff);
@@ -60,7 +60,7 @@ namespace Task3.BillingSystem
             _callList.Add(call);
         }
 
-        public void OnCallReportRequest(object sender, AbonentEventArgs e)
+        private void OnCallReportRequest(object sender, AbonentEventArgs e)
         {
             var abonent = sender as IAbonent;
             foreach (var call in _callList)

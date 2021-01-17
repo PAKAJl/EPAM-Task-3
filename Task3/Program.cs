@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Task3.AutomaticStation;
 using Task3.AutomaticStation.Interfaces;

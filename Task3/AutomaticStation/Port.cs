@@ -8,14 +8,13 @@ namespace Task3.AutomaticStation
     class Port : IPort
     {
         public PortStatus Status { get; set; }
-
         public string PhoneNumber { get; set; }
-        public event EventHandler<CallEventArgs> IncomingCall;
-        public event EventHandler<CallEventArgs> OutcomingCall;
-        public event EventHandler<CallEventArgs> PortBusy;
-        public event EventHandler<CallEventArgs> CallTerminate;
 
         private ITerminal _terminal;
+
+        public event EventHandler<CallEventArgs> IncomingCall;
+        public event EventHandler<CallEventArgs> OutcomingCall;
+        public event EventHandler<CallEventArgs> CallTerminate;
 
         public Port(string phoneNumber, ITerminal terminal)
         {
@@ -31,7 +30,6 @@ namespace Task3.AutomaticStation
             {
                 IncomingCall += _terminal.OnIncomingCall;
 
-                // subscribe port to terminal messages
                 _terminal.Called += OnOutcomingCall;
                 _terminal.CallTerminate += OnCallTerminate;
                 Status = PortStatus.CONNECTED;
@@ -62,7 +60,7 @@ namespace Task3.AutomaticStation
             IncomingCall?.Invoke(this, e);
         }
 
-        public void OnOutcomingCall(object sender, CallEventArgs e)
+        private void OnOutcomingCall(object sender, CallEventArgs e)
         {
             Status = PortStatus.BUSY;
             e.CallerPhoneNumber = PhoneNumber;
@@ -74,13 +72,12 @@ namespace Task3.AutomaticStation
             _terminal.CallingError(e);
         }
 
-        public void OnCallTerminate(object sender, CallEventArgs e)
+        private void OnCallTerminate(object sender, CallEventArgs e)
         {
-            Status = PortStatus.CONNECTED;
             CallTerminate?.Invoke(sender, e);
         }
 
-        public void OnTerminalStatusRequest(object sender, ConnectEventArgs e)
+        private void OnTerminalStatusRequest(object sender, ConnectEventArgs e)
         {
             if (e.Status == PortStatus.CONNECTED)
             {

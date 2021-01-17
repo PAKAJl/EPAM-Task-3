@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Task3.AutomaticStation.Interfaces;
 using Task3.AutomaticStation.Models;
 using Task3.AutomaticStation.Models.Call;
-using Task3.BillingSystem.Interfaces;
-using Task3.Logger;
-using Task3.Logger.Interfaces;
 
 namespace Task3.AutomaticStation
 {
@@ -16,7 +11,6 @@ namespace Task3.AutomaticStation
     {
         public ICollection<IPort> Ports { get; }
 
-        public event EventHandler<CallEventArgs> CallTerminate;
         public event EventHandler<CallEventArgs> CallRecordSend;
         public event EventHandler<BalanceEventArgs> BalanceRequest;
 
