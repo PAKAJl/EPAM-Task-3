@@ -15,42 +15,57 @@ namespace Task3.BillingSystem
             {
                 case FilterParameters.ABONENT:
                     {
-                        foreach (var call in callList)
-                        {
-                            if (call.TargetPhoneNumber == value)
-                            {
-                                result.Add(call);
-                            }
-                        }
+                        FilterByAbonent(value, callList, result);
                         break;
                     }
                 case FilterParameters.CALL_DATE:
                     {
-                        DateTime date = Convert.ToDateTime(value).Date;
-                        Console.WriteLine(date);
-                        foreach (var call in callList)
-                        {
-                            if (call.DateTimeBegin.Date == date)
-                            {
-                                result.Add(call);
-                            }
-                        }
+                        FilterByDate(value, callList, result);
                         break;
                     }
                 case FilterParameters.COST:
                     {
-                        double cost = double.Parse(value);
-                        foreach (var call in callList)
-                        {
-                            if (call.Cost > cost - 2 && call.Cost < cost + 2)
-                            {
-                                result.Add(call);
-                            }
-                        }
+                        FilterByCost(value, callList, result);
                         break;
                     }
             }
             return result;
+        }
+
+        private static void FilterByAbonent(string value, ICollection<Call> callList, ICollection<Call> result)
+        {
+            foreach (var call in callList)
+            {
+                if (call.TargetPhoneNumber == value)
+                {
+                    result.Add(call);
+                }
+            }
+        }
+
+        private static void FilterByDate(string value, ICollection<Call> callList, ICollection<Call> result)
+        {
+            DateTime date = Convert.ToDateTime(value).Date;
+            Console.WriteLine(date);
+            foreach (var call in callList)
+            {
+                if (call.DateTimeBegin.Date == date)
+                {
+                    result.Add(call);
+                }
+            }
+        }
+
+        private static void FilterByCost(string value, ICollection<Call> callList, ICollection<Call> result)
+        {
+            double cost = double.Parse(value);
+            foreach (var call in callList)
+            {
+                if (call.Cost > cost - 2 && call.Cost < cost + 2)
+                {
+                    result.Add(call);
+                }
+            }
         }
     }
 }

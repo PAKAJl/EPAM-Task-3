@@ -63,6 +63,8 @@ namespace Task3
                 call.Write(logger);
             }
 
+            teleOperator.DeleteAbonent(abonent3);
+
             Console.ReadKey();
         }
     }

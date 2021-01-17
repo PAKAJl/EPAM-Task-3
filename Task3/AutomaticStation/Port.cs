@@ -5,7 +5,7 @@ using Task3.AutomaticStation.Models.Call;
 
 namespace Task3.AutomaticStation
 {
-    class Port : IPort
+    class Port : IPort, IDisposable
     {
         public PortStatus Status { get; set; }
         public string PhoneNumber { get; set; }
@@ -22,6 +22,11 @@ namespace Task3.AutomaticStation
             PhoneNumber = phoneNumber;
             _terminal = terminal;
             _terminal.Connected += OnTerminalStatusRequest;
+        }
+
+        public void Dispose()
+        {
+            _terminal.Connected -= OnTerminalStatusRequest;
         }
 
         private ConnectionError Connect()
@@ -49,6 +54,7 @@ namespace Task3.AutomaticStation
                 IncomingCall -= _terminal.OnIncomingCall;
 
                 _terminal.Called -= OnOutcomingCall;
+                _terminal.CallTerminate -= OnCallTerminate;
 
                 Status = PortStatus.FREE;
             }
@@ -88,5 +94,7 @@ namespace Task3.AutomaticStation
                 Disconnect();
             }
         }
+
+        
     }
 }

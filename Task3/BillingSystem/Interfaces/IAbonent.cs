@@ -7,7 +7,6 @@ namespace Task3.BillingSystem.Interfaces
 {
     public interface IAbonent
     {
-        Guid Id { get; }
         ITerminal Terminal { get; }
         double Balance { get; set; }
         string PhoneNumber { get; }

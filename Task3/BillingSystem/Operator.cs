@@ -33,9 +33,24 @@ namespace Task3.BillingSystem
             port.CallTerminate += station.OnCallTerminate;
         }
 
-        public void DeleteAbonentById(Guid id)
+        private IStation GetStationByPhoneNumberContains(string value)
         {
-            IAbonent abonent = _abonentList.FirstOrDefault(user => user.Id == id);
+            foreach (var st in _stationList)
+            {
+                if (st.Ports.FirstOrDefault(p => p.PhoneNumber == value) != null)
+                {
+                    return st;
+                }
+            }
+            return new Station();
+        }
+
+        public void DeleteAbonent(IAbonent abonent)
+        {
+            IStation station = GetStationByPhoneNumberContains(abonent.PhoneNumber);
+            IPort port = station.Ports.FirstOrDefault(p => p.PhoneNumber == abonent.PhoneNumber);
+            port.OutcomingCall -= station.CallingRequest;
+            port.CallTerminate -= station.OnCallTerminate;
             _abonentList.Remove(abonent);
         }
 
@@ -45,6 +60,13 @@ namespace Task3.BillingSystem
             station.CallRecordSend += OnCallRecordSend;
             _stationList.Add(station);
 
+        }
+
+        public void RemoveStation(IStation station)
+        {
+            station.BalanceRequest -= OnBalanceRequest;
+            station.CallRecordSend -= OnCallRecordSend;
+            _stationList.Remove(station);
         }
 
         private void OnBalanceRequest(object sender, BalanceEventArgs e)

@@ -7,7 +7,7 @@ namespace Task3.BillingSystem.Interfaces
     interface IOperator
     {
         void AddAbonent(IAbonent abonent, IStation station);
-        void DeleteAbonentById(Guid id);
+        void DeleteAbonent(IAbonent abonent);
         void AddStation(IStation station);
         ICollection<IAbonent> GetAbonentList();
     }

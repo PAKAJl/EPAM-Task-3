@@ -8,7 +8,6 @@ namespace Task3.BillingSystem
 {
     class Abonent : IAbonent
     {
-        public Guid Id { get; private set; }
         public ITerminal Terminal { get; private set; }
         public double Balance { get; set; }
         public string PhoneNumber { get; }
@@ -18,7 +17,6 @@ namespace Task3.BillingSystem
 
         public Abonent(ITariff tariff, string phoneNumber, ITerminal terminal)
         {
-            Id = Guid.NewGuid();
             Balance = 0;
             Tariff = tariff;
             PhoneNumber = phoneNumber;
